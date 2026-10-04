@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Kiosk: cihaz açılınca uygulamayı başlat -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Android TV / Fire TV: dokunmatik ve leanback zorunlu değil -->
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+    <application
+        android:name=".SignageApp"
+        android:allowBackup="true"
+        android:banner="@drawable/tv_banner"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Signage"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Signage"
+        android:usesCleartextTraffic="${usesCleartext}">
+
+        <!-- Sentry yalnızca BuildConfig.SENTRY_DSN doluysa elle başlatılır -->
+        <meta-data android:name="io.sentry.auto-init" android:value="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|keyboard|navigation"
+            android:theme="@style/Theme.Signage">
+            <!-- Yön sabit değil; ekranın orientation değerine göre programatik ayarlanır -->
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            Kiosk: "Ana ekran (launcher) olarak kullan" seçeneği bu takma adı
+            açar (varsayılan kapalı). Varsayılan launcher seçilince cihaz her
+            açılışta ve Home tuşunda doğrudan bu uygulamaya gelir.
+        -->
+        <activity-alias
+            android:name=".HomeLauncher"
+            android:enabled="false"
+            android:exported="true"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
+        <receiver
+            android:name=".kiosk.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

@@ -1,0 +1,21 @@
+# systemd: /etc/systemd/system/signage-backend.service
+#   sudo systemctl daemon-reload && sudo systemctl enable --now signage-backend
+# Önce: cd /opt/signage/backend && npm ci && npm run build
+[Unit]
+Description=Signage backend (NestJS)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=signage
+WorkingDirectory=/opt/signage/backend
+# NODE_ENV=production, JWT_SECRET, ADMIN_*, DB_FILE=/var/lib/signage/signage.db,
+# BACKUP_DIR=/var/lib/signage/backups, PANEL_URL, CORS_ORIGIN, TRUST_PROXY=1
+EnvironmentFile=/etc/signage/backend.env
+ExecStart=/usr/bin/node dist/main
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

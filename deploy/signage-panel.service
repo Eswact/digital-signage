@@ -1,0 +1,18 @@
+# systemd: /etc/systemd/system/signage-panel.service
+# Önce: cd /opt/signage/panel && npm ci && NEXT_PUBLIC_API_URL=/api npm run build
+#       cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/
+[Unit]
+Description=Signage panel (Next.js)
+After=network-online.target
+
+[Service]
+Type=simple
+User=signage
+WorkingDirectory=/opt/signage/panel/.next/standalone
+Environment=NODE_ENV=production PORT=3000 HOSTNAME=127.0.0.1
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

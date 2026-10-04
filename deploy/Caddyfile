@@ -1,0 +1,20 @@
+# SITE_ADDRESS: a domain name (automatic HTTPS) or ":80" (HTTP only, LAN testing).
+{$SITE_ADDRESS}
+
+encode gzip
+
+# REST API and device WebSocket (Caddy forwards the WS upgrade by itself).
+# Server-sent events (/api/live) are flushed immediately.
+handle /api/* {
+	reverse_proxy backend:3001 {
+		flush_interval -1
+	}
+}
+handle /ws* {
+	reverse_proxy backend:3001
+}
+
+# Panel
+handle {
+	reverse_proxy panel:3000
+}

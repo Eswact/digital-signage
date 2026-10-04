@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Signage</string>
+
+    <!-- Pairing screen -->
+    <string name="pairing_label">DEVICE ID</string>
+    <string name="pairing_title">Pair this screen</string>
+    <string name="pairing_step1">Open the panel, go to Devices and press Add device.</string>
+    <string name="pairing_step2">Enter the code above, or scan the QR code with your phone.</string>
+    <string name="status_connected">Connected to server</string>
+    <string name="status_connecting">Connecting…</string>
+    <string name="server_line">Server %1$s</string>
+    <string name="open_settings">Server &amp; kiosk settings</string>
+    <string name="scan_to_pair">Scan to pair</string>
+
+    <!-- Templates -->
+    <string name="unsupported_template">Unsupported template: %1$s</string>
+    <string name="update_app">Please update the app</string>
+    <string name="media_empty">No media yet</string>
+    <string name="media_waiting">Loading media…</string>
+    <string name="web_no_address">No web address set</string>
+    <string name="web_unreachable">Can\'t reach %1$s — retrying…</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_server">Server</string>
+    <string name="settings_server_help">IP address and port of the computer running the backend. The device and the computer must be on the same network.</string>
+    <string name="settings_address">Address</string>
+    <string name="settings_port_hint">The default port 3001 is used if you leave it out.</string>
+    <string name="settings_invalid">Invalid address. Example: 192.168.1.57:3001</string>
+    <string name="settings_connected">Connected: %1$s</string>
+    <string name="settings_disconnected">Not connected (%1$s)</string>
+    <string name="settings_reset">Reset to default (%1$s)</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_connect">Save and connect</string>
+    <string name="kiosk">Kiosk</string>
+    <string name="kiosk_autostart">Start when the device boots</string>
+    <string name="kiosk_overlay_hint">Android 10+ needs the \"Display over other apps\" permission (also to restart after a crash).</string>
+    <string name="kiosk_grant">Grant permission</string>
+    <string name="kiosk_home">Use as home screen (launcher)</string>
+    <string name="kiosk_home_hint">Choose Signage as the default home app; the device then opens straight into this screen at boot and on the Home key.</string>
+</resources>

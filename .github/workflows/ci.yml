@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  design-tokens:
+    name: Design tokens up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Fails when shared/design-tokens.json changed but the generated files were not updated.
+      - run: node scripts/gen-design-tokens.mjs --check
+
+  backend:
+    name: Backend (tsc, lint, e2e, build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run lint
+      - run: npm run test:e2e
+      - run: npm run build
+
+  panel:
+    name: Panel (tsc, lint, i18n, build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: panel
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: panel/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npx next lint
+      - run: npm run i18n:check
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: /api
+          NEXT_TELEMETRY_DISABLED: 1
+
+  android:
+    name: Android (assembleDebug)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew assembleDebug --no-daemon

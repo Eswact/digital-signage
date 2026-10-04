@@ -1,0 +1,46 @@
+# Node
+node_modules/
+dist/
+build/
+.next/
+out/
+coverage/
+
+# Env
+.env
+.env.local
+*.env
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Uploaded media (default MEDIA_DIR)
+backend/data/
+
+# SQLite (local database)
+*.db
+*.db-shm
+*.db-wal
+*.db.bak-*
+
+# Claude Code — kişisel yerel ayarlar
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+
+# Android
+android/.gradle/
+android/local.properties
+android/app/build/
+android/build/
+*.apk
+*.keystore
+!debug.keystore
+.cxx/
+*.tsbuildinfo

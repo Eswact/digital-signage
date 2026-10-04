@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Signage</string>
+
+    <string name="pairing_label">CİHAZ KİMLİĞİ</string>
+    <string name="pairing_title">Bu ekranı eşleştir</string>
+    <string name="pairing_step1">Paneli açın, Cihazlar sayfasında Cihaz ekle\'ye basın.</string>
+    <string name="pairing_step2">Yukarıdaki kodu girin ya da QR kodu telefonunuzla okutun.</string>
+    <string name="status_connected">Sunucuya bağlı</string>
+    <string name="status_connecting">Bağlanıyor…</string>
+    <string name="server_line">Sunucu %1$s</string>
+    <string name="open_settings">Sunucu ve kiosk ayarları</string>
+    <string name="scan_to_pair">Eşleştirmek için okutun</string>
+
+    <string name="unsupported_template">Desteklenmeyen şablon: %1$s</string>
+    <string name="update_app">Lütfen uygulamayı güncelleyin</string>
+    <string name="media_empty">Henüz medya yok</string>
+    <string name="media_waiting">Medya yükleniyor…</string>
+    <string name="web_no_address">Web adresi girilmemiş</string>
+    <string name="web_unreachable">%1$s adresine ulaşılamıyor — yeniden deneniyor…</string>
+
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_server">Sunucu</string>
+    <string name="settings_server_help">Backend\'in çalıştığı bilgisayarın IP adresi ve portu. Cihaz ile bilgisayar aynı ağda olmalı.</string>
+    <string name="settings_address">Adres</string>
+    <string name="settings_port_hint">Port yazılmazsa 3001 kullanılır.</string>
+    <string name="settings_invalid">Geçersiz adres. Örnek: 192.168.1.57:3001</string>
+    <string name="settings_connected">Şu an bağlı: %1$s</string>
+    <string name="settings_disconnected">Şu an bağlı değil (%1$s)</string>
+    <string name="settings_reset">Varsayılana dön (%1$s)</string>
+    <string name="cancel">İptal</string>
+    <string name="save_connect">Kaydet ve bağlan</string>
+    <string name="kiosk">Kiosk</string>
+    <string name="kiosk_autostart">Cihaz açılınca otomatik başlat</string>
+    <string name="kiosk_overlay_hint">Android 10+ için \"Diğer uygulamaların üzerinde göster\" izni gerekir (çökünce yeniden başlatma için de).</string>
+    <string name="kiosk_grant">İzni ver</string>
+    <string name="kiosk_home">Ana ekran (launcher) olarak kullan</string>
+    <string name="kiosk_home_hint">Varsayılan ana ekran uygulaması olarak Signage\'ı seçin; cihaz her açılışta ve Home tuşunda doğrudan bu ekrana gelir.</string>
+</resources>

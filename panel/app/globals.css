@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Screen fonts — the same files as in the Android APK (assets/fonts); embedded so the
+ * preview looks like the device. Licenses: public/fonts/licenses (OFL).
+ */
+@font-face { font-family: 'SG Roboto'; src: url('/fonts/Roboto.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'SG Inter'; src: url('/fonts/Inter.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'SG Montserrat'; src: url('/fonts/Montserrat.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'SG Oswald'; src: url('/fonts/Oswald.ttf') format('truetype'); font-weight: 200 700; font-display: swap; }
+@font-face { font-family: 'SG Bebas Neue'; src: url('/fonts/BebasNeue.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'SG Playfair Display'; src: url('/fonts/PlayfairDisplay.ttf') format('truetype'); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: 'SG Roboto Mono'; src: url('/fonts/RobotoMono.ttf') format('truetype'); font-weight: 100 700; font-display: swap; }
+/* Panel UI typeface (same Inter file as the screen font, under its own name). */
+@font-face { font-family: 'Inter UI'; src: url('/fonts/Inter.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
+
+/*
+ * Design tokens — Swiss style: paper-white ground, near-black ink, hairline rules,
+ * one signal color. Channels are space-separated RGB so Tailwind can add opacity.
+ */
+:root {
+  --paper: 250 250 248;
+  --surface: 255 255 255;
+  --sunken: 241 241 238;
+  --line: 228 228 224;
+  --line-strong: 200 200 194;
+  --ink: 17 17 17;
+  --ink-2: 82 82 77;
+  --ink-3: 112 112 105;
+  --accent: 36 64 240;
+  --accent-soft: 232 236 255;
+  --accent-ink: 255 255 255;
+  --danger: 200 40 28;
+  --danger-soft: 253 236 234;
+  --success: 15 118 84;
+  --success-soft: 226 244 237;
+  --warn: 161 87 8;
+  --warn-soft: 253 241 220;
+  color-scheme: light;
+}
+
+.dark {
+  --paper: 14 14 13;
+  --surface: 22 22 21;
+  --sunken: 31 31 29;
+  --line: 42 42 39;
+  --line-strong: 62 62 57;
+  --ink: 242 242 238;
+  --ink-2: 168 168 160;
+  --ink-3: 132 132 124;
+  --accent: 125 140 255;
+  --accent-soft: 27 33 80;
+  --accent-ink: 14 14 13;
+  --danger: 255 120 108;
+  --danger-soft: 58 21 18;
+  --success: 80 200 150;
+  --success-soft: 14 43 32;
+  --warn: 240 170 80;
+  --warn-soft: 51 34 10;
+  color-scheme: dark;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-paper font-sans text-[15px] leading-relaxed text-ink antialiased;
+  font-feature-settings: 'cv11', 'ss01', 'tnum' 0;
+  min-height: 100dvh;
+}
+
+h1, h2, h3 {
+  @apply tracking-tight;
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.2);
+}
+
+/* Thin scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--line-strong)) transparent;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+
+/* Number inputs: no spinners (type-in is faster and cleaner) */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* Safe areas for the mobile bottom bar */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
