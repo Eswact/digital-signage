@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.camlica.signage"
+    namespace = "com.eswact.signage"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.camlica.signage"
+        applicationId = "com.eswact.signage"
         minSdk = 24
         targetSdk = 34
         // Compared with the template minAppVersion (backend templates/template.types.ts).

@@ -25,7 +25,7 @@ function kotlin() {
   const elements = (list) =>
     list.map((e) => `        ${kstr(e.key)} to ${spec(e)},`).join('\n');
   return `// ${HEADER}
-package com.camlica.signage.ui.design
+package com.eswact.signage.ui.design
 
 /** Same values as panel lib/design-tokens.ts (single source: shared/design-tokens.json). */
 internal object DesignTokens {
@@ -71,7 +71,7 @@ export const DESIGN_TOKENS: {
 
 const outputs = [
   ['panel/lib/design-tokens.ts', typescript()],
-  ['android/app/src/main/java/com/camlica/signage/ui/design/DesignTokens.kt', kotlin()],
+  ['android/app/src/main/java/com/eswact/signage/ui/design/DesignTokens.kt', kotlin()],
 ];
 
 const check = process.argv.includes('--check');
