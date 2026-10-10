@@ -32,6 +32,10 @@ The plan for the items below is in [docs/2026-10-04-remaining-work-plan.md](docs
 - [ ] Translate the remaining Turkish code comments to English
 - [ ] Billing/plan-change screens, if the commercial phase returns (payments and subscriptions were dropped from the roadmap)
 
+## Public demo (portfolio)
+
+- [ ] Free public demo: demo mode with seeded data, visitor sandboxes, signed release APK with a baked-in demo URL, browser device simulator, hosting configuration — see [docs/2026-10-04-demo-deployment-plan.md](docs/2026-10-04-demo-deployment-plan.md)
+
 ---
 
 ## Open questions

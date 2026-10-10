@@ -19,7 +19,7 @@ A real-time digital signage management system driven by JSON. The control plane 
   - File name: `YYYY-MM-DD-topic.md` (date + kebab-case title), written in English. (The two existing files from 2026-10-04 are in Turkish.)
   - Start with the date + scope; if external sources were used, end with a "Sources" list.
   - If an analysis contains a finding that changes the architecture/setup, update the relevant CLAUDE.md/README section too.
-- Existing: [`docs/2026-10-04-urunlesme-ve-rakip-analizi.md`](docs/2026-10-04-urunlesme-ve-rakip-analizi.md) — productization blockers and competitor comparison (Turkish). [`docs/2026-10-04-remaining-work-plan.md`](docs/2026-10-04-remaining-work-plan.md) — plan for everything still open in TODO.md. TODO.md lists only unfinished work; delete finished items instead of ticking them.
+- Existing: [`docs/2026-10-04-urunlesme-ve-rakip-analizi.md`](docs/2026-10-04-urunlesme-ve-rakip-analizi.md) — productization blockers and competitor comparison (Turkish). [`docs/2026-10-04-remaining-work-plan.md`](docs/2026-10-04-remaining-work-plan.md) — plan for everything still open in TODO.md. [`docs/2026-10-04-demo-deployment-plan.md`](docs/2026-10-04-demo-deployment-plan.md) — plan for a free public demo (hosting, demo mode, APK distribution). TODO.md lists only unfinished work; delete finished items instead of ticking them.
 
 ## Tech stack
 
