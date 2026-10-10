@@ -9,7 +9,8 @@ JSON-driven digital signage. The core idea: **the control plane is small JSON, h
 | **backend/** | API + real-time bridge | NestJS · SQLite (TypeORM) |
 | **panel/** | Admin interface (screens, devices, media, schedules, team) | Next.js 14 · Tailwind · React Query |
 | **android/** | The app running on the screen (APK) | Kotlin · Jetpack Compose · OkHttp · Coil · Media3 |
-| **scripts/** | POS simulation / test helpers | Node.js |
+| **scripts/** | POS and queue machine simulations; generators for design tokens and the brand | Node.js |
+| **shared/** | Single source of design values (`design-tokens.json`, `brand.json`) | JSON |
 
 ## End-to-end flow
 
@@ -32,7 +33,7 @@ Every customer is an **organization**; devices, screens, groups, media, schedule
 
 A person can belong to several organizations and switches between them in the panel. On top of that sits the platform role **superadmin** (the installation's owner): sees every organization, moves a device between organizations, edits plan limits and platform settings.
 
-Registration is closed: the first account on a fresh install becomes superadmin; everyone else joins by **invitation** (an emailed link, valid 7 days) or is created by a superadmin. Sessions use a short-lived access token (15 min) plus a rotating refresh token; reuse of an old refresh token revokes the whole session family. Password reset by email, "sign out everywhere" and optional two-factor authentication (TOTP with recovery codes) are built in.
+Registration is closed: the first account on a fresh install becomes superadmin; everyone else joins by **invitation** (an emailed link, valid 7 days; without a mail server the panel shows the link once to copy) or is created by a superadmin. Sessions use a short-lived access token (15 min) plus a rotating refresh token; reuse of an old refresh token revokes the whole session family. Password reset by email, "sign out everywhere" and optional two-factor authentication (TOTP with recovery codes) are built in.
 
 **Plan limits** (screens, devices, members, media files, storage, upload size, video length) come from platform defaults that a superadmin edits under *Settings*, optionally overridden per organization.
 
@@ -109,7 +110,7 @@ Every template is an independent unit. The design is in the APK; the server only
 
 ## Media
 
-- **One library per organization** ("Uploads"). Anything added from a screen editor or an overlay also lands there. Limits (files, storage, upload size, video length) come from the plan.
+- **One library per organization** (the *Media* page). Anything added from a screen editor or an overlay also lands there. Limits (files, storage, upload size, video length) come from the plan.
 - **Upload:** `POST /api/media` (multipart, streamed to disk). The server detects the real file type from its bytes (JPEG, PNG, GIF, WebP, MP4, WebM; never SVG), hashes it (a duplicate returns the existing file), reads image size, and checks the video length with `ffprobe`. The panel crops/downsizes images before uploading (canvas) and computes an average color.
 - **References:** screens reference files by `mediaId`; the server rewrites the descriptor (hash, size, kind, duration) from the library so clients cannot forge it, rejects other organizations' files, and refuses to delete a file that a screen still uses (409 with the screen names).
 - **Storage:** `MediaStorage` driver — local disk (default, `MEDIA_DIR`) or S3-compatible (`MEDIA_STORAGE=s3`; AWS S3, Cloudflare R2, MinIO — not verified against a real bucket in this repository).
@@ -122,14 +123,14 @@ A schedule says "show screen X on device/group Y on these weekdays between these
 
 ## Orientation
 
-Every screen has an `orientation`: `landscape`, `portrait` or `auto` (adaptive). The device rotates to the orientation of its assigned screen; with `auto` it is not locked and shows the layout of however the device is standing. Templates adapt to both (Compose `BoxWithConstraints`; the panel preview offers TV/tablet/kiosk resolutions).
+Every screen has an `orientation`: `landscape`, `portrait` or `auto` (adaptive). The device rotates to the orientation of its assigned screen; with `auto` it is not locked and shows the layout of however the device is standing. Templates adapt to both (Compose `BoxWithConstraints`; the panel preview offers TV/tablet/phone/kiosk resolutions in both orientations).
 
 ## Data sources (order-board and queue-number)
 
 1. **Panel editor** — an admin manages orders/queue by hand; every change goes live instantly.
 2. **Ingest API** — an external system **pushes** data with a screen-scoped API key (`X-API-Key`), created under "Feed via API" in the editor.
-   - Order board (POS): `POST/PATCH/DELETE /ingest/orders`, `GET /ingest/state`, `PUT /ingest/orders`. Test: `scripts/fake-pos-ingest.mjs <API_KEY>`.
-   - Queue number (queue machine): `POST /ingest/queue/next`, `POST /ingest/queue/prev`, `PUT /ingest/queue/current`, `POST /ingest/queue/items` … Test: `scripts/fake-queue-ingest.mjs <API_KEY>`.
+   - Order board (POS): `POST/PATCH/DELETE /api/ingest/orders`, `GET /api/ingest/state`, `PUT /api/ingest/orders`. Test: `scripts/fake-pos-ingest.mjs <API_KEY>`.
+   - Queue number (queue machine): `POST /api/ingest/queue/next`, `POST /api/ingest/queue/prev`, `PUT /api/ingest/queue/current`, `POST /api/ingest/queue/items` … Test: `scripts/fake-queue-ingest.mjs <API_KEY>`.
 
 ## Reliability
 
@@ -138,18 +139,25 @@ Every screen has an `orientation`: `landscape`, `portrait` or `auto` (adaptive).
 - **Offline resilience:** the last screen is saved in Room and shown when the network is gone or at startup (`live ?: cached`); its media is played from the media cache.
 - **Device status:** online/offline + last seen, APK version and an "update needed" warning in the panel.
 - **Busy order board:** orders that do not fit a column turn pages every few seconds (scrolling is useless on an unattended screen).
-- **Kiosk:** the screen never sleeps and runs full screen; optionally the device starts the app at boot or uses it as its launcher; the app restarts itself after a crash.
+- **Kiosk:** the screen never sleeps and runs full screen; optionally the device starts the app at boot or uses it as its launcher; the app restarts itself after a crash (and gives up after 3 crashes in 2 minutes, so a broken build does not loop forever). On Android TV it appears in the TV launcher, and Menu/OK on the remote opens the settings.
 
 ## Security
 
 - **Device secret:** a device gets its own secret at first registration and sends it on every connection; knowing the Device ID is not enough to connect or impersonate it.
 - **API keys** are stored only as hashes; the panel shows a key once, when it is created. Refresh tokens and invitation/reset tokens are stored hashed too.
-- **Limits:** login attempts, device registration, ingest requests and sensitive account actions are rate-limited per minute.
+- **Limits:** login attempts, session refreshes, device registration, ingest requests and sensitive account actions are rate-limited per minute.
 - **Production:** the server refuses to start with a weak or example `JWT_SECRET`/administrator password; the schema is created by migrations and a daily backup can be taken (see `deploy/README.md`).
 
 ## Groups
 
-Devices can be grouped; one screen is assigned to the whole group at once (`POST /groups/:id/assign-screen` → `assignScreen` + broadcast for every device). Schedules can target a group.
+Devices can be grouped; one screen is assigned to the whole group at once (`POST /api/groups/:id/assign-screen` → `assignScreen` + broadcast for every device). Schedules can target a group.
+
+## Brand and color themes
+
+- **Logo:** an "LED panel" mark — a solid D (the screen) covered by a pixel grid in which the pixels of an S are lit. It is vector everywhere: the panel draws it from code, and the Android app icon (with an Android 13 themed layer), the TV banner and the pairing-screen mark are generated vector drawables. There are no PNG icons.
+- **Panel color themes:** Cobalt (default), Graphite, Teal, Lime, Violet and Wine, each with a light and a dark set. Under *Account → Appearance* every user picks a color theme and light/system/dark mode; the choice is saved in that browser only and applied before the first paint, so the page does not flash. The logo follows the chosen theme.
+- **The device side** (pairing and settings screens) and the sign-in page always use the default theme in dark mode.
+- **One source:** logo geometry, themes and app icons live in `shared/brand.json`; `node scripts/gen-brand.mjs` generates the panel and Android files from it (the generated files are never edited by hand, and CI checks that they are up to date). Screen themes and template element defaults work the same way: `shared/design-tokens.json` → `node scripts/gen-design-tokens.mjs`.
 
 ## Summary of principles
 
