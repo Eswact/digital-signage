@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   design-tokens:
-    name: Design tokens up to date
+    name: Design tokens and brand up to date
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,6 +20,8 @@ jobs:
           node-version: 22
       # Fails when shared/design-tokens.json changed but the generated files were not updated.
       - run: node scripts/gen-design-tokens.mjs --check
+      # Same for shared/brand.json (logo, color themes, launcher icon, TV banner).
+      - run: node scripts/gen-brand.mjs --check
 
   backend:
     name: Backend (tsc, lint, e2e, build)

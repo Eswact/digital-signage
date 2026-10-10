@@ -8,8 +8,8 @@ type Variant = 'primary' | 'accent' | 'secondary' | 'ghost' | 'danger';
 type Size = 'sm' | 'md' | 'lg';
 
 const VARIANTS: Record<Variant, string> = {
-  primary: 'bg-ink text-paper hover:bg-ink/85 active:bg-ink/75',
-  accent: 'bg-accent text-accent-ink hover:bg-accent/90 active:bg-accent/80',
+  primary: 'bg-accent-fill text-accent-ink hover:bg-accent-fill/90 active:bg-accent-fill/80',
+  accent: 'bg-accent-fill text-accent-ink hover:bg-accent-fill/90 active:bg-accent-fill/80',
   secondary: 'border border-line-strong bg-surface text-ink hover:bg-sunken active:bg-sunken',
   ghost: 'text-ink-2 hover:bg-sunken hover:text-ink',
   danger: 'border border-danger/30 bg-danger-soft text-danger hover:bg-danger/15',

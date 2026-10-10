@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import './palettes.css';
 import { Providers } from './providers';
 import { THEME_INIT_SCRIPT } from '@/lib/theme';
 
@@ -12,8 +13,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fafaf8' },
-    { media: '(prefers-color-scheme: dark)', color: '#0e0e0d' },
+    { media: '(prefers-color-scheme: light)', color: '#f6f7fa' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0e19' },
   ],
 };
 

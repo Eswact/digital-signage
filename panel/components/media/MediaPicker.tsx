@@ -134,7 +134,7 @@ export function MediaPicker({
                   >
                     <MediaThumb asset={m} />
                     {on && (
-                      <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-accent-ink">
+                      <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-accent-fill text-accent-ink">
                         <IconCheck className="h-3.5 w-3.5" />
                       </span>
                     )}

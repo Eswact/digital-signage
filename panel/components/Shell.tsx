@@ -11,6 +11,7 @@ import { useLive } from '@/lib/live';
 import { LANGUAGES, useI18n, useT, msg } from '@/lib/i18n';
 import { ThemePref, useTheme } from '@/lib/theme';
 import { cn } from '@/lib/cn';
+import { BrandMark } from '@/components/BrandMark';
 import { Dialog } from '@/components/ui/Dialog';
 import { useToast, errorMessage } from '@/components/ui/Toast';
 import {
@@ -62,12 +63,7 @@ const BOTTOM: NavItem[] = MANAGE.slice(0, 4);
 export function Brand({ className }: { className?: string }) {
   return (
     <div className={cn('flex items-center gap-2.5', className)}>
-      <span className="grid h-6 w-6 grid-cols-2 gap-px">
-        <span className="bg-ink" />
-        <span className="bg-accent" />
-        <span className="bg-accent" />
-        <span className="bg-ink" />
-      </span>
+      <BrandMark size={24} className="flex-none" />
       <span className="text-[15px] font-semibold tracking-tightest">Signage</span>
     </div>
   );

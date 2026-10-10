@@ -136,9 +136,17 @@ Every screen has an `orientation`: `landscape` | `portrait` | `auto` (first-clas
 
 Devices can be grouped; one screen is assigned to a whole group at once (`POST /groups/:id/assign-screen` → `assignScreen` + broadcast for each device). Schedules can target a group. Panel: `/groups`.
 
+## Brand & color themes
+
+**One source:** `shared/brand.json` holds the logo geometry, the six color themes and the outlined "Signage" wordmark; after editing run `node scripts/gen-brand.mjs` (never edit its outputs by hand; CI checks them). It generates panel `lib/brand.ts` (mark paths, theme list), `app/palettes.css` (theme tokens), `app/icon.svg` (favicon) and Android `drawable/ic_launcher_foreground.xml` + `ic_launcher_monochrome.xml` + `mipmap-anydpi-v26/ic_launcher.xml` (adaptive icon with an Android 13 themed layer), `mipmap/ic_launcher.xml` (API 24–25), `drawable/tv_banner.xml`, `drawable/brand_mark.xml` (pairing screen), `values/brand_colors.xml` and `ui/theme/BrandColors.kt`. Everything is vector; there are no PNG icons.
+
+- **Logo ("LED Pano · piksel", chosen 2026-10-10):** a solid D (the screen) covered by an LED pixel grid that follows its curve; the pixels of an S are lit. Lit pixels are cut out of the D (even-odd), so the plate shows through; unlit pixels are the D's color at `unlitAlpha`; one lit pixel is the highlight color. Panel `components/BrandMark.tsx` draws it from `lib/brand.ts` and follows the color theme.
+- **Color themes:** Cobalt (default), Graphite, Teal, Lime, Violet, Wine — each a full light + dark set. The default sits on `:root`/`.dark`, the others under `[data-palette]` on `<html>`. Roles: `accent` = text, borders, rings, indicators; `accent-fill` = primary button and logo plate, with `accent-ink` on it (they differ only where a fill color is unreadable as text, e.g. Lime); `brand-hi` = the logo's highlighted pixel. Status colors (success/warn/danger) are shared and stay in `app/globals.css`.
+- **Choice:** Account → Appearance (color theme + light/system/dark), stored per browser by `lib/theme` (`signage_palette`, `signage_theme`); `THEME_INIT_SCRIPT` applies both before first paint. The device UI (pairing, settings) and the sign-in poster always use the default theme's dark mode.
+
 ## Panel (design & i18n)
 
-Swiss-style, mobile-first (`app/globals.css` tokens, light + dark; Tailwind semantic colors `paper/surface/sunken/line/ink/accent/…` — use them, not raw palette colors). Routes: `app/(auth)/` (sign-in split 35 % form / 65 % promo slides, forgot/reset password, invite) and `app/(app)/` (shell with sidebar on desktop and bottom bar + "More" on phones): devices, screens (+ `[id]` editor), media, schedules, groups, team, plan, account, `admin/{users,organizations,settings}`. Data hooks live in `lib/queries.ts`, mutations use `useAction` (`lib/hooks.ts`).
+Swiss-style, mobile-first (tokens: theme colors in the generated `app/palettes.css`, status colors in `app/globals.css`, light + dark; Tailwind semantic colors `paper/surface/sunken/line/ink/accent/accent-fill/…` — use them, not raw palette colors). Routes: `app/(auth)/` (sign-in split 35 % form / 65 % promo slides, forgot/reset password, invite) and `app/(app)/` (shell with sidebar on desktop and bottom bar + "More" on phones): devices, screens (+ `[id]` editor), media, schedules, groups, team, plan, account, `admin/{users,organizations,settings}`. Data hooks live in `lib/queries.ts`, mutations use `useAction` (`lib/hooks.ts`).
 
 **i18n:** the English sentence is the key — `t('Add device')` (`useT()`), module-level constants use `msg('…')`; other languages map it in `lib/i18n/tr.ts`; a missing entry falls back to English. `npm run i18n:check` lists uncovered strings (run in CI) — wrap new strings in `t`/`msg`/`useAction` options so the checker sees them. Backend error messages and emails are English (the panel shows them as they are).
 
@@ -163,8 +171,8 @@ No infrastructure (Docker/Postgres/Redis) is needed in development — SQLite is
 - `.env.example`: in `backend/`, `panel/` and `deploy/` (server setup).
 - **Tests:** `cd backend && npm run test:e2e` (jest + supertest + real WS, in-memory SQLite; `test/`): device flow, isolation, ingest, rate limit, backup, migration–entity agreement, organizations/roles/invitations/limits, sessions/2FA, media (a fake `ffprobe` fixture), schedules, live stream.
 - **Lint:** backend `npm run lint` (ESLint 9 flat), panel `npx next lint`, `npm run i18n:check`.
-- **CI:** `.github/workflows/ci.yml` — design tokens up to date, backend tsc/lint/e2e/build, panel tsc/lint/i18n/build, Android assembleDebug.
-- **Design values single source:** themes and element defaults in `shared/design-tokens.json`; after changing it run `node scripts/gen-design-tokens.mjs`.
+- **CI:** `.github/workflows/ci.yml` — design tokens and brand up to date, backend tsc/lint/e2e/build, panel tsc/lint/i18n/build, Android assembleDebug.
+- **Design values single source:** screen themes and element defaults in `shared/design-tokens.json` (`node scripts/gen-design-tokens.mjs`); logo, panel color themes and app icons in `shared/brand.json` (`node scripts/gen-brand.mjs`).
 
 ## Known limitations
 

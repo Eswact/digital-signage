@@ -9,21 +9,24 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-/** Colors of the device's own UI (pairing screen, settings) — the same ink/paper/accent as the panel. */
+/**
+ * Colors of the device's own UI (pairing screen, settings): the default color theme's dark mode,
+ * the same values as the panel (generated BrandColors, single source shared/brand.json).
+ */
 object SignageColors {
-    val Ink = Color(0xFF0C0C0B)
-    val Surface = Color(0xFF161615)
-    val Raised = Color(0xFF1F1F1D)
-    val Line = Color(0xFF3E3E39)
-    val Text = Color(0xFFF2F2EE)
-    val Muted = Color(0xFFA8A8A0)
-    val Accent = Color(0xFF7D8CFF)
+    val Ink = BrandColors.Paper
+    val Surface = BrandColors.Surface
+    val Raised = BrandColors.Sunken
+    val Line = BrandColors.LineStrong
+    val Text = BrandColors.Ink
+    val Muted = BrandColors.Ink2
+    val Accent = BrandColors.AccentFill
     val Success = Color(0xFF50C896)
 }
 
 private val scheme = darkColorScheme(
     primary = SignageColors.Accent,
-    onPrimary = SignageColors.Ink,
+    onPrimary = BrandColors.AccentInk,
     background = SignageColors.Ink,
     onBackground = SignageColors.Text,
     surface = SignageColors.Surface,

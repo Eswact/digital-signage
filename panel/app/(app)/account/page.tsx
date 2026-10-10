@@ -6,14 +6,19 @@ import QRCode from 'qrcode';
 import { api, logout, refreshProfile } from '@/lib/api';
 import { setSession, Session, useRole } from '@/lib/session';
 import { useAction } from '@/lib/hooks';
-import { useT } from '@/lib/i18n';
+import { msg, useT } from '@/lib/i18n';
+import { ThemePref, useTheme } from '@/lib/theme';
+import { PALETTES } from '@/lib/brand';
+import { cn } from '@/lib/cn';
+import { BrandMark } from '@/components/BrandMark';
 import { Button } from '@/components/ui/Button';
 import { Section } from '@/components/ui/Card';
 import { useConfirm } from '@/components/ui/Confirm';
 import { Field, Input } from '@/components/ui/Input';
 import { PageHeader } from '@/components/ui/Misc';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { Badge } from '@/components/ui/Badge';
-import { IconCopy } from '@/components/ui/icons';
+import { IconCopy, IconMoon, IconSun, IconSystem } from '@/components/ui/icons';
 
 function PasswordSection() {
   const t = useT();
@@ -199,6 +204,53 @@ function TwoFactorSection() {
   );
 }
 
+const MODES: { value: ThemePref; label: string; icon: React.ReactNode }[] = [
+  { value: 'light', label: msg('Light'), icon: <IconSun className="h-4 w-4" /> },
+  { value: 'system', label: msg('System'), icon: <IconSystem className="h-4 w-4" /> },
+  { value: 'dark', label: msg('Dark'), icon: <IconMoon className="h-4 w-4" /> },
+];
+
+/** Color theme + light/dark mode; kept in this browser (lib/theme). Each theme option shows its app icon. */
+function AppearanceSection() {
+  const t = useT();
+  const { pref, setPref, palette, setPalette } = useTheme();
+  return (
+    <Section title={t('Appearance')} description={t('Saved in this browser only.')}>
+      <div className="space-y-5">
+        <div>
+          <p className="mb-2 text-xs font-medium text-ink-2">{t('Color theme')}</p>
+          <div role="radiogroup" className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {PALETTES.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                role="radio"
+                aria-checked={palette === p.id}
+                onClick={() => setPalette(p.id)}
+                className={cn(
+                  'flex items-center gap-3 rounded border bg-surface px-3 py-2.5 text-left text-sm font-medium transition-colors',
+                  palette === p.id ? 'border-accent ring-2 ring-accent/20' : 'border-line-strong hover:border-ink-3',
+                )}
+              >
+                <BrandMark size={28} colors={p.icon} className="flex-none" />
+                {t(p.label)}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="mb-2 text-xs font-medium text-ink-2">{t('Mode')}</p>
+          <SegmentedControl<ThemePref>
+            value={pref}
+            onChange={setPref}
+            options={MODES.map((m) => ({ value: m.value, label: t(m.label), icon: m.icon }))}
+          />
+        </div>
+      </div>
+    </Section>
+  );
+}
+
 export default function AccountPage() {
   const t = useT();
   const router = useRouter();
@@ -217,6 +269,7 @@ export default function AccountPage() {
     <div className="space-y-8">
       <PageHeader eyebrow={t('Account')} title={session.user.name || session.user.email} description={session.user.email} actions={session.user.role === 'superadmin' && <Badge tone="accent">{t('Platform administrator')}</Badge>} />
 
+      <AppearanceSection />
       <PasswordSection />
       <TwoFactorSection />
 

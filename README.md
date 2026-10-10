@@ -116,6 +116,7 @@ cd backend && npm run test:e2e      # device flow, isolation, ingest, teams, med
 cd backend && npm run lint
 cd panel && npx next lint && npm run i18n:check
 node scripts/gen-design-tokens.mjs --check   # shared/design-tokens.json and the generated files agree
+node scripts/gen-brand.mjs --check           # shared/brand.json (logo, color themes, app icons) and the generated files agree
 ```
 
 GitHub Actions: [.github/workflows/ci.yml](.github/workflows/ci.yml).

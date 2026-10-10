@@ -17,21 +17,12 @@
 @font-face { font-family: 'Inter UI'; src: url('/fonts/Inter.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
 
 /*
- * Design tokens — Swiss style: paper-white ground, near-black ink, hairline rules,
- * one signal color. Channels are space-separated RGB so Tailwind can add opacity.
+ * Design tokens — Swiss style: paper ground, ink text, hairline rules, one signal color.
+ * The theme colors (paper … accent, brand-hi) come from the selected color theme in
+ * app/palettes.css (generated from shared/brand.json); status colors are shared by every theme.
+ * Channels are space-separated RGB so Tailwind can add opacity.
  */
 :root {
-  --paper: 250 250 248;
-  --surface: 255 255 255;
-  --sunken: 241 241 238;
-  --line: 228 228 224;
-  --line-strong: 200 200 194;
-  --ink: 17 17 17;
-  --ink-2: 82 82 77;
-  --ink-3: 112 112 105;
-  --accent: 36 64 240;
-  --accent-soft: 232 236 255;
-  --accent-ink: 255 255 255;
   --danger: 200 40 28;
   --danger-soft: 253 236 234;
   --success: 15 118 84;
@@ -42,17 +33,6 @@
 }
 
 .dark {
-  --paper: 14 14 13;
-  --surface: 22 22 21;
-  --sunken: 31 31 29;
-  --line: 42 42 39;
-  --line-strong: 62 62 57;
-  --ink: 242 242 238;
-  --ink-2: 168 168 160;
-  --ink-3: 132 132 124;
-  --accent: 125 140 255;
-  --accent-soft: 27 33 80;
-  --accent-ink: 14 14 13;
   --danger: 255 120 108;
   --danger-soft: 58 21 18;
   --success: 80 200 150;

@@ -1,5 +1,6 @@
 package com.eswact.signage.ui.templates
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -39,7 +41,7 @@ import com.eswact.signage.ui.QrCode
 import com.eswact.signage.ui.theme.SignageColors
 
 /**
- * Shown while the device is not paired / has no screen: the Device ID in large type, what to do
+ * Shown while the device is not paired / has no screen: the brand, the Device ID in large type, what to do
  * about it, and a QR code that opens the panel's pairing form with the code filled in. The
  * settings button is reachable with a TV remote's D-pad too.
  */
@@ -74,6 +76,24 @@ fun PairingScreen(
                 modifier = Modifier.widthIn(max = 560.dp),
                 horizontalAlignment = Alignment.Start,
             ) {
+                Row(
+                    modifier = Modifier.padding(bottom = if (compact) 10.dp else 28.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.brand_mark),
+                        contentDescription = null,
+                        modifier = Modifier.size(if (compact) 24.dp else 32.dp),
+                    )
+                    Text(
+                        stringResource(R.string.app_name),
+                        color = SignageColors.Text,
+                        fontSize = if (compact) 16.sp else 19.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        letterSpacing = (-0.4).sp,
+                        modifier = Modifier.padding(start = 10.dp),
+                    )
+                }
                 Text(
                     stringResource(R.string.pairing_label),
                     color = SignageColors.Muted,
@@ -88,7 +108,7 @@ fun PairingScreen(
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace,
                     letterSpacing = 4.sp,
-                    modifier = Modifier.padding(top = 6.dp, bottom = 18.dp),
+                    modifier = Modifier.padding(top = 6.dp, bottom = if (compact) 12.dp else 18.dp),
                 )
                 Box(Modifier.fillMaxWidthLine())
                 Text(
@@ -96,7 +116,7 @@ fun PairingScreen(
                     color = SignageColors.Text,
                     fontSize = if (compact) 18.sp else 22.sp,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(top = 18.dp, bottom = 8.dp),
+                    modifier = Modifier.padding(top = if (compact) 12.dp else 18.dp, bottom = 8.dp),
                 )
                 Step(1, stringResource(R.string.pairing_step1), compact)
                 Step(2, stringResource(R.string.pairing_step2), compact)
@@ -156,7 +176,9 @@ fun PairingScreen(
         }
 
         if (wide) {
+            // Scrolls only when it does not fit (phones in landscape); the D-pad focus brings the settings button into view.
             Row(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(64.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) { info(); qr() }

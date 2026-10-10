@@ -93,7 +93,7 @@ function InviteForm() {
               <p className="text-sm text-ink-2">{t('An account with this email already exists. Sign in to accept the invitation.')}</p>
               <Link
                 href={`/login?next=${encodeURIComponent(`/invite?token=${token}`)}`}
-                className="inline-flex h-12 w-full items-center justify-center rounded bg-ink px-5 text-[15px] font-medium text-paper hover:bg-ink/85"
+                className="inline-flex h-12 w-full items-center justify-center rounded bg-accent-fill px-5 text-[15px] font-medium text-accent-ink hover:bg-accent-fill/90"
               >
                 {t('Sign in')}
               </Link>

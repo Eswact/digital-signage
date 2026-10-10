@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED — do not edit by hand. Source: shared/brand.json · Regenerate: node scripts/gen-brand.mjs -->
+<resources>
+    <color name="ic_launcher_background">#2440F0</color>
+    <color name="brand_window_background">#0A0E19</color>
+</resources>

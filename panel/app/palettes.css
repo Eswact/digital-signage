@@ -1,0 +1,195 @@
+/* GENERATED — do not edit by hand. Source: shared/brand.json · Regenerate: node scripts/gen-brand.mjs
+ * Colour themes: the default (cobalt) on :root / .dark, the others under [data-palette] on <html>
+ * (set before first paint by lib/theme THEME_INIT_SCRIPT). Space-separated RGB so Tailwind can add opacity. */
+
+:root {
+  --paper: 246 247 250;
+  --surface: 255 255 255;
+  --sunken: 237 240 246;
+  --line: 222 227 236;
+  --line-strong: 195 204 218;
+  --ink: 15 23 42;
+  --ink-2: 71 85 105;
+  --ink-3: 95 110 130;
+  --accent: 36 64 240;
+  --accent-soft: 233 236 254;
+  --accent-fill: 36 64 240;
+  --accent-ink: 255 255 255;
+  --brand-hi: 217 119 6;
+}
+
+.dark {
+  --paper: 10 14 25;
+  --surface: 18 26 42;
+  --sunken: 26 35 53;
+  --line: 38 50 75;
+  --line-strong: 58 71 98;
+  --ink: 241 245 249;
+  --ink-2: 148 163 184;
+  --ink-3: 125 140 166;
+  --accent: 154 166 255;
+  --accent-soft: 42 51 80;
+  --accent-fill: 125 140 255;
+  --accent-ink: 11 16 51;
+  --brand-hi: 251 191 36;
+}
+
+[data-palette='graphite'] {
+  --paper: 247 247 245;
+  --surface: 255 255 255;
+  --sunken: 239 239 236;
+  --line: 227 227 223;
+  --line-strong: 207 207 202;
+  --ink: 24 24 27;
+  --ink-2: 82 82 91;
+  --ink-3: 107 107 115;
+  --accent: 24 24 27;
+  --accent-soft: 232 232 232;
+  --accent-fill: 24 24 27;
+  --accent-ink: 255 255 255;
+  --brand-hi: 234 88 12;
+}
+
+.dark[data-palette='graphite'] {
+  --paper: 12 12 13;
+  --surface: 22 22 24;
+  --sunken: 31 31 34;
+  --line: 44 44 48;
+  --line-strong: 63 63 69;
+  --ink: 250 250 250;
+  --ink-2: 161 161 170;
+  --ink-3: 138 138 147;
+  --accent: 250 250 250;
+  --accent-soft: 63 63 65;
+  --accent-fill: 250 250 250;
+  --accent-ink: 24 24 27;
+  --brand-hi: 251 146 60;
+}
+
+[data-palette='teal'] {
+  --paper: 246 248 248;
+  --surface: 255 255 255;
+  --sunken: 238 242 242;
+  --line: 220 227 227;
+  --line-strong: 194 205 205;
+  --ink: 15 23 42;
+  --ink-2: 71 85 105;
+  --ink-3: 91 107 127;
+  --accent: 15 118 110;
+  --accent-soft: 231 241 241;
+  --accent-fill: 15 118 110;
+  --accent-ink: 255 255 255;
+  --brand-hi: 229 83 58;
+}
+
+.dark[data-palette='teal'] {
+  --paper: 11 17 20;
+  --surface: 19 28 32;
+  --sunken: 27 38 43;
+  --line: 37 50 58;
+  --line-strong: 55 71 79;
+  --ink: 241 245 249;
+  --ink-2: 148 163 184;
+  --ink-3: 122 139 160;
+  --accent: 45 212 191;
+  --accent-soft: 24 61 61;
+  --accent-fill: 45 212 191;
+  --accent-ink: 4 47 46;
+  --brand-hi: 255 107 74;
+}
+
+[data-palette='lime'] {
+  --paper: 247 247 245;
+  --surface: 255 255 255;
+  --sunken: 239 239 236;
+  --line: 227 227 223;
+  --line-strong: 207 207 202;
+  --ink: 24 24 27;
+  --ink-2: 82 82 91;
+  --ink-3: 107 107 115;
+  --accent: 77 107 12;
+  --accent-soft: 237 240 231;
+  --accent-fill: 200 240 60;
+  --accent-ink: 24 33 10;
+  --brand-hi: 200 240 60;
+}
+
+.dark[data-palette='lime'] {
+  --paper: 12 12 13;
+  --surface: 22 22 24;
+  --sunken: 31 31 34;
+  --line: 42 42 46;
+  --line-strong: 63 63 69;
+  --ink: 250 250 250;
+  --ink-2: 161 161 170;
+  --ink-3: 138 138 147;
+  --accent: 210 246 90;
+  --accent-soft: 56 62 36;
+  --accent-fill: 210 246 90;
+  --accent-ink: 20 26 5;
+  --brand-hi: 210 246 90;
+}
+
+[data-palette='violet'] {
+  --paper: 248 247 251;
+  --surface: 255 255 255;
+  --sunken: 240 238 246;
+  --line: 226 223 236;
+  --line-strong: 203 198 218;
+  --ink: 23 19 42;
+  --ink-2: 83 77 102;
+  --ink-3: 104 97 121;
+  --accent: 109 40 217;
+  --accent-soft: 240 234 251;
+  --accent-fill: 109 40 217;
+  --accent-ink: 255 255 255;
+  --brand-hi: 219 39 119;
+}
+
+.dark[data-palette='violet'] {
+  --paper: 14 11 22;
+  --surface: 23 19 33;
+  --sunken: 32 27 45;
+  --line: 45 38 61;
+  --line-strong: 65 56 90;
+  --ink: 245 243 251;
+  --ink-2: 171 164 192;
+  --ink-3: 144 137 166;
+  --accent: 185 163 251;
+  --accent-soft: 52 45 72;
+  --accent-fill: 167 139 250;
+  --accent-ink: 30 11 74;
+  --brand-hi: 244 114 182;
+}
+
+[data-palette='wine'] {
+  --paper: 250 247 247;
+  --surface: 255 255 255;
+  --sunken: 244 237 238;
+  --line: 234 223 225;
+  --line-strong: 217 201 204;
+  --ink: 31 16 20;
+  --ink-2: 94 74 80;
+  --ink-3: 110 89 96;
+  --accent: 159 18 57;
+  --accent-soft: 245 231 235;
+  --accent-fill: 159 18 57;
+  --accent-ink: 255 255 255;
+  --brand-hi: 232 85 63;
+}
+
+.dark[data-palette='wine'] {
+  --paper: 20 11 14;
+  --surface: 31 19 23;
+  --sunken: 41 26 31;
+  --line: 58 38 44;
+  --line-strong: 76 51 58;
+  --ink: 251 241 243;
+  --ink-2: 194 170 176;
+  --ink-3: 169 143 150;
+  --accent: 253 164 175;
+  --accent-soft: 71 45 50;
+  --accent-fill: 253 164 175;
+  --accent-ink: 76 5 25;
+  --brand-hi: 251 138 122;
+}

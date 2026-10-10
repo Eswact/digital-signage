@@ -3,12 +3,13 @@
 import { useEffect, useState } from 'react';
 import { useT, msg } from '@/lib/i18n';
 import { cn } from '@/lib/cn';
+import { POSTER } from '@/lib/brand';
 
 /* The marketing side of the sign-in page: rotating slides that explain the product.
- * Fixed dark colors on purpose (it is a poster, not part of the themed UI). */
+ * Fixed dark colors on purpose (it is a poster, not part of the themed UI): the default theme's dark mode. */
 
-const BG = '#0c0c0b';
-const ACCENT = '#7d8cff';
+const BG = POSTER.background;
+const ACCENT = POSTER.accent;
 
 function Frame({ children, className }: { children: React.ReactNode; className?: string }) {
   return (

@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss';
 
-/** Semantic color tokens (CSS variables in globals.css, light + dark). */
+/** Semantic color tokens (CSS variables: theme colors in app/palettes.css, status colors in globals.css; light + dark). */
 const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
 
 const config: Config = {
@@ -14,7 +14,7 @@ const config: Config = {
         sunken: token('sunken'),
         line: { DEFAULT: token('line'), strong: token('line-strong') },
         ink: { DEFAULT: token('ink'), 2: token('ink-2'), 3: token('ink-3') },
-        accent: { DEFAULT: token('accent'), soft: token('accent-soft'), ink: token('accent-ink') },
+        accent: { DEFAULT: token('accent'), soft: token('accent-soft'), fill: token('accent-fill'), ink: token('accent-ink') },
         danger: { DEFAULT: token('danger'), soft: token('danger-soft') },
         success: { DEFAULT: token('success'), soft: token('success-soft') },
         warn: { DEFAULT: token('warn'), soft: token('warn-soft') },
